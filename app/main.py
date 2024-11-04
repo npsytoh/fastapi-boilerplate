@@ -3,6 +3,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.config import settings
+from app.schemas.info import InfoResponse
 
 app = FastAPI(
     debug=settings.DEBUG,
@@ -20,7 +21,7 @@ app.add_middleware(
 )
 
 
-@app.get("/", tags=["info"])
+@app.get("/", tags=["info"], response_model=InfoResponse)
 async def get_info() -> dict[str, str]:
     return {"title": settings.TITLE, "version": settings.VERSION}
 
