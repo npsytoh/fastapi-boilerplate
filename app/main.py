@@ -2,10 +2,12 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.core.config import settings
+
 app = FastAPI(
-    debug=False,
-    title="FastAPI App",
-    version="0.1.0",
+    debug=settings.DEBUG,
+    title=settings.TITLE,
+    version=settings.VERSION,
 )
 
 
@@ -18,14 +20,10 @@ app.add_middleware(
 )
 
 
-@app.get("/")
-async def root():
-    return {"message": "Hello FastAPI!"}
-
-
-def main():
-    uvicorn.run(app=app, host="127.0.0.1", port=8000)
+@app.get("/", tags=["info"])
+async def get_info():
+    return {"title": settings.TITLE, "version": settings.VERSION}
 
 
 if __name__ == "__main__":
-    main()
+    uvicorn.run(app=app, host=settings.APP_HOST, port=settings.APP_PORT)
