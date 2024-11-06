@@ -1,6 +1,6 @@
-from pydantic import BaseModel
+from app.schemas.base import BaseSchema
 
 
-class InfoResponse(BaseModel):
+class InfoResponse(BaseSchema):
     title: str
     version: str
