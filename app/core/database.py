@@ -1,7 +1,6 @@
 from collections.abc import Generator
 
 from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
@@ -15,10 +14,8 @@ try:
         future=True,
     )
     session_local = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-except Exception:
-    pass
-
-Base = declarative_base()
+except Exception as e:
+    print(f"Connection failed: {e}")
 
 
 def get_db() -> Generator:
