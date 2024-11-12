@@ -8,5 +8,9 @@ class UserParams(BaseSchema):
     email: EmailStr
 
 
+class UserRequest(UserParams):
+    pass
+
+
 class UserResponse(UserParams):
     pass
