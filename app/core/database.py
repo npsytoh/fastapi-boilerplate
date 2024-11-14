@@ -8,7 +8,7 @@ from sqlalchemy.orm import sessionmaker
 from app.core.config import settings
 
 database_url = URL.create(
-    "postgresql",
+    "postgresql+asyncpg",
     username=settings.DB_USER,
     password=settings.DB_PASSWORD,
     host=settings.APP_HOST,
