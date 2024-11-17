@@ -7,30 +7,41 @@ from sqlalchemy.orm import sessionmaker
 
 from app.core.config import settings
 
-database_url = URL.create(
-    "postgresql+asyncpg",
-    username=settings.DB_USER,
-    password=settings.DB_PASSWORD,
-    host=settings.APP_HOST,
-    database=settings.DB_NAME,
-)
+
+def get_database_url(is_async: bool = False) -> str:
+    database_driver = "postgresql"
+
+    if is_async:
+        database_driver += "+asyncpg"
+    else:
+        database_driver += "+psycopg2"
+
+    url_object = URL.create(
+        drivername=database_driver,
+        username=settings.DB_USER,
+        password=settings.DB_PASSWORD,
+        host=settings.APP_HOST,
+        port=settings.DB_PORT,
+        database=settings.DB_NAME,
+    )
+    return url_object.render_as_string(hide_password=False)
 
 
 try:
     engine = create_engine(
-        database_url,
+        get_database_url(),
         pool_pre_ping=True,
         echo=False,
         future=True,
     )
     session_local = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 except Exception as e:
-    print(f"DataBase connection failed: {e}")
+    raise ValueError(f"DataBase connection failed: {e}")
 
 
 try:
     async_engine = create_async_engine(
-        database_url,
+        get_database_url(is_async=True),
         pool_pre_ping=True,
         echo=False,
         future=True,
@@ -39,7 +50,7 @@ try:
         bind=async_engine, class_=AsyncSession, expire_on_commit=False
     )
 except Exception as e:
-    print(f"DataBase connection failed: {e}")
+    raise ValueError(f"DataBase connection failed: {e}")
 
 
 def get_db() -> Generator[Session, None, None]:
