@@ -1,4 +1,5 @@
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.future import select
 
 from app import models, schemas
 
@@ -12,4 +13,5 @@ async def create_user(db: AsyncSession, body: schemas.UserRequest) -> models.Use
 
 
 async def get_all_users(db: AsyncSession):
-    return await db.query(models.User).all()
+    result = await db.execute(select(models.User))
+    return result.scalars().all()
