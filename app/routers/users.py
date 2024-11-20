@@ -8,8 +8,13 @@ router = APIRouter(prefix="/users", tags=["users"])
 
 
 @router.get("/", response_model=list[schemas.UserResponse])
-async def get_users(db: AsyncSession = Depends(get_async_db)):
+async def get_all_users(db: AsyncSession = Depends(get_async_db)):
     return await crud.get_all_users(db)
+
+
+@router.get("/{id}", response_model=schemas.UserResponse)
+async def get_user(id: int, db: AsyncSession = Depends(get_async_db)):
+    return await crud.get_user_by_id(db, id=id)
 
 
 @router.post("/", response_model=schemas.UserResponse)
