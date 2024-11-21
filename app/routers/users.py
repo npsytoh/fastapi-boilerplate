@@ -20,3 +20,8 @@ async def get_user(id: int, db: AsyncSession = Depends(get_async_db)):
 @router.post("/", response_model=schemas.UserResponse)
 async def create_user(body: schemas.UserRequest, db: AsyncSession = Depends(get_async_db)):
     return await crud.create_user(db, body)
+
+
+@router.delete("/{id}")
+async def delete_user(id: int, db: AsyncSession):
+    await crud.delete_user(db, id=id)

@@ -1,3 +1,4 @@
+from fastapi import HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 
@@ -20,3 +21,12 @@ async def create_user(db: AsyncSession, body: schemas.UserRequest) -> models.Use
     await db.commit()
     await db.refresh(obj)
     return obj
+
+
+async def delete_user(db: AsyncSession, id: int):
+    existing_user = await db.get(models.User, id)
+    if existing_user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    await db.delete(existing_user)
+    await db.commit()
+    return
