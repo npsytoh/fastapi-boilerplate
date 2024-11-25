@@ -23,10 +23,9 @@ async def create_user(db: AsyncSession, body: schemas.UserRequest) -> models.Use
     return obj
 
 
-async def delete_user(db: AsyncSession, id: int):
-    existing_user = await db.get(models.User, id)
-    if existing_user is None:
+async def delete_user(db: AsyncSession, id: int) -> None:
+    user = await db.get(models.User, id)
+    if user is None:
         raise HTTPException(status_code=404, detail="User not found")
-    await db.delete(existing_user)
+    await db.delete(user)
     await db.commit()
-    return

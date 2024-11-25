@@ -14,3 +14,6 @@ class UserRequest(UserParams):
 
 class UserResponse(UserParams):
     pass
+
+    class Config:
+        orm_mode = True
