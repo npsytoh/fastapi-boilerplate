@@ -23,10 +23,16 @@ async def create_user(db: AsyncSession, body: schemas.UserRequest) -> models.Use
     return obj
 
 
-async def update_user(db: AsyncSession, id: int):
+async def update_user(db: AsyncSession, id: int, body: schemas.UserRequest) -> models.User:
     user = await db.get(models.User, id)
     if user is None:
         raise HTTPException(status_code=404, detail="User not found")
+
+    if body.user_name is not None:
+        user.user_name = body.user_name
+    if body.email is not None:
+        user.email = body.email
+
     await db.commit()
     await db.refresh(user)
     return user
