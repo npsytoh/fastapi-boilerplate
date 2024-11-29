@@ -1,1 +1,1 @@
-from .user import UserParams, UserRequest, UserResponse
+from .user import UserRequest, UserResponse, UserUpdate
