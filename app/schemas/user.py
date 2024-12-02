@@ -8,13 +8,13 @@ class UserBase(BaseSchema):
     email: EmailStr
 
 
-class UserRequest(UserBase):
-    pass
-
-
 class UserUpdate(UserBase):
     user_name: str | None = None
-    email: str | None = None
+    email: EmailStr | None = None
+
+
+class UserRequest(UserBase):
+    pass
 
 
 class UserResponse(UserBase):

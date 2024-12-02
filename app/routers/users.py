@@ -22,8 +22,8 @@ async def create_user(body: schemas.UserRequest, db: AsyncSession = Depends(get_
     return await crud.create_user(db, body)
 
 
-@router.put("/{id}", response_model=schemas.UserUpdate)
-async def update_user(id: int, body: schemas.UserRequest, db: AsyncSession = Depends(get_async_db)):
+@router.put("/{id}", response_model=schemas.UserResponse)
+async def update_user(id: int, body: schemas.UserUpdate, db: AsyncSession = Depends(get_async_db)):
     return await crud.update_user(db, id, body)
 
 
