@@ -5,12 +5,12 @@ from sqlalchemy.future import select
 from app import models, schemas
 
 
-async def get_all_users(db: AsyncSession):
+async def get_all_users(db: AsyncSession) -> list[models.User]:
     result = await db.execute(select(models.User))
     return result.scalars().all()
 
 
-async def get_user_by_id(db: AsyncSession, id: int):
+async def get_user_by_id(db: AsyncSession, id: int) -> models.User:
     result = await db.execute(select(models.User).where(models.User.id == id))
     return result.scalars().first()
 
