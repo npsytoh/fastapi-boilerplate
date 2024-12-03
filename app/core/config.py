@@ -12,7 +12,8 @@ class Settings(BaseSettings):
 
     ENV: str = "local"
     DEBUG: bool = True
-    TITLE: str = "FastAPI App"
+    API_V1_STR: str = "/api/v1"
+    PROJECT_NAME: str = "FastAPI App"
     VERSION: str = "0.0.1"
     APP_HOST: str = "127.0.0.1"
     APP_PORT: int = 8000
