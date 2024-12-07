@@ -25,7 +25,7 @@ app.add_middleware(
 
 @app.get("/", tags=["info"], response_model=InfoResponse)
 async def get_info() -> dict[str, str]:
-    return {"title": settings.TITLE, "version": settings.VERSION}
+    return {"title": settings.PROJECT_NAME, "version": settings.VERSION}
 
 
 app.include_router(router, prefix=settings.API_V1_STR)
