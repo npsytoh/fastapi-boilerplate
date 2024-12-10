@@ -4,7 +4,6 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.api_v1.routers import router
 from app.core.config import settings
-from app.schemas.info import InfoResponse
 
 app = FastAPI(
     debug=settings.DEBUG,
@@ -13,7 +12,6 @@ app = FastAPI(
     openapi_url=f"{settings.API_V1_STR}/openapi.json",
 )
 
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.CORS_ORIGINS,
@@ -21,12 +19,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-
-@app.get("/", tags=["info"], response_model=InfoResponse)
-async def get_info() -> dict[str, str]:
-    return {"title": settings.PROJECT_NAME, "version": settings.VERSION}
-
 
 app.include_router(router, prefix=settings.API_V1_STR)
 
