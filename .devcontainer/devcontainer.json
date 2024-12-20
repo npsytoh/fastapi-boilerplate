@@ -1,0 +1,31 @@
+{
+	"name": "FastAPI Container",
+	"build": {
+		"dockerfile": "../Dockerfile",
+		"context": ".."
+	},
+	"runArgs": ["--name=fastapi-container", "--rm"],
+	"workspaceFolder": "/app",
+	"workspaceMount": "source=${localWorkspaceFolder},target=/app,type=bind",
+	"mounts": [
+		{
+			"type": "volume",
+			"source": "devcontainer_venv",
+			"target": "${containerWorkspaceFolder}/.venv"
+		}
+	],
+	"postCreateCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-python.python",
+				"ms-python.vscode-pylance",
+				"ms-python.debugpy",
+				"charliermarsh.ruff"
+			],
+			"settings": {
+				"python.defaultInterpreterPath": "/usr/local/bin/python"
+			}
+		}
+	}
+}
