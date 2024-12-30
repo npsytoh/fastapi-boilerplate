@@ -1,4 +1,3 @@
-import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -22,5 +21,10 @@ app.add_middleware(
 
 app.include_router(router, prefix=settings.API_V1_STR)
 
-if __name__ == "__main__":
-    uvicorn.run(app=app, host=settings.APP_HOST, port=settings.APP_PORT)
+if settings.DEBUG:
+    from debug_toolbar.middleware import DebugToolbarMiddleware
+
+    app.add_middleware(
+        DebugToolbarMiddleware,
+        panels=["app.core.database.SQLAlchemyPanel"],
+    )
