@@ -9,6 +9,10 @@ tasks:
     desc: List all tasks
     cmd: task -l
 
+  build:
+    desc: Build dev server
+    cmd: docker build -t fastapi:latest .
+
   dev:
     desc: Start dev server
     cmd: docker run -it --rm -p 8000:8000 fastapi:latest
