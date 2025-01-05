@@ -1,0 +1,14 @@
+version: '3'
+
+silent: true
+
+tasks:
+  default:
+    aliases:
+      - list
+    desc: List all tasks
+    cmd: task -l
+
+  dev:
+    desc: Start dev server
+    cmd: docker run -it --rm -p 8000:8000 fastapi:latest
